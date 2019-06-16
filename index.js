@@ -19,14 +19,22 @@ const rhs = Number(readline.prompt());
 
 var result;
 
-if ( op == '+' ) {
-    result = lhs+rhs;
-} else if ( op == '-' ) {
-    result = lhs-rhs;
-} else if ( op == '*' ) {
-    result = lhs*rhs;
-} else {
-    result = lhs/rhs;
+switch ( op ) {
+    case '+':
+        result = lhs+rhs;
+        break;
+    
+    case '-':
+        result = lhs-rhs;
+        break;
+    
+    case '*':
+        result = lhs*rhs;
+        break;
+    
+    case '/':
+        result = lhs/rhs;
+        break;
 }
 
 console.log('The result is ' + result);
