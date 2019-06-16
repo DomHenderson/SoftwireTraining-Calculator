@@ -1,52 +1,75 @@
 const readline = require('readline-sync');
 
-console.log('Welcome to the calculator!');
+function welcome () {
+    console.log('Welcome to the calculator!');
+}
 
-console.log('Enter the operator');
-var op = readline.prompt();
-while ( op != '+' && op != '-' && op != '*' && op != '/') {
-    console.log('Operator \'op\' not recognised');
-    console.log('Valid operators are \'+\', \'-\', \'*\', \'/\'' );
+function getOperator ( validOperators ) {
     console.log('Enter the operator');
-    op = readline.prompt();
+    var op = readline.prompt();
+    while ( !validOperators.includes(op)) {
+        console.log('Operator \'op\' not recognised');
+        console.log('Valid operators are \'' + validOperators.join('\', \'') +'\'' );
+        console.log('Enter the operator');
+        op = readline.prompt();
+    }
+    return op;
 }
 
-console.log('How many numbers do you want to ' + op + '?');
-const num = Number(readline.prompt());
-
-var args = [];
-
-for ( var i = 0; i < num; ++i ) {
-    console.log('Please enter number ' + (i+1) + ':' );
-    args[i] = Number(readline.prompt());
+function getArgCount ( op ) {
+    console.log('How many numbers do you want to ' + op + '?');
+    return Number(readline.prompt());
 }
 
-var func;
-
-switch ( op ) {
-    case '+':
-        func = function(accumulator,currentValue) {
-            return accumulator + currentValue;
-        };
-        break;
-    
-    case '-':
-        func = function(accumulator,currentValue) {
-            return accumulator - currentValue;
-        };
-        break;
-    
-    case '*':
-        func = function(accumulator,currentValue) {
-            return accumulator * currentValue;
-        };
-        break;
-    
-    case '/':
-        func = function(accumulator,currentValue) {
-            return accumulator / currentValue;
-        };
-        break;
+function getOperand ( index ) {
+    console.log('Please enter number' + index + ':' );
+    return Number(readline.prompt());
 }
 
-console.log('The result is ' + args.reduce(func));
+function getAllOperands ( count ) {
+    var args = [];
+    for ( var i = 0; i < count; ++i ) {
+        args[i] = getOperand(i+1);
+    }
+    return args;
+}
+
+function performCalculation ( op, args ) {
+    var func;
+
+    switch ( op ) {
+        case '+':
+            func = function(accumulator,currentValue) {
+                return accumulator + currentValue;
+            };
+            break;
+    
+        case '-':
+            func = function(accumulator,currentValue) {
+                return accumulator - currentValue;
+            };
+            break;
+        
+        case '*':
+            func = function(accumulator,currentValue) {
+                return accumulator * currentValue;
+            };
+            break;
+        
+        case '/':
+            func = function(accumulator,currentValue) {
+                return accumulator / currentValue;
+            };
+            break;
+    }
+
+    return args.reduce(func);
+}
+
+welcome();
+while ( true ) {
+    const op = getOperator(['+','-','*','/']);
+    const num = getArgCount( op );
+    const args = getAllOperands(num);
+    console.log('The result is ' + performCalculation(op, args) + '\n' );
+}
