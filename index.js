@@ -11,30 +11,42 @@ while ( op != '+' && op != '-' && op != '*' && op != '/') {
     op = readline.prompt();
 }
 
-console.log('Enter the first number');
-const lhs = Number(readline.prompt());
+console.log('How many numbers do you want to ' + op + '?');
+const num = Number(readline.prompt());
 
-console.log('Enter the second number');
-const rhs = Number(readline.prompt());
+var args = [];
 
-var result;
+for ( var i = 0; i < num; ++i ) {
+    console.log('Please enter number ' + (i+1) + ':' );
+    args[i] = Number(readline.prompt());
+}
+
+var func;
 
 switch ( op ) {
     case '+':
-        result = lhs+rhs;
+        func = function(accumulator,currentValue) {
+            return accumulator + currentValue;
+        };
         break;
     
     case '-':
-        result = lhs-rhs;
+        func = function(accumulator,currentValue) {
+            return accumulator - currentValue;
+        };
         break;
     
     case '*':
-        result = lhs*rhs;
+        func = function(accumulator,currentValue) {
+            return accumulator * currentValue;
+        };
         break;
     
     case '/':
-        result = lhs/rhs;
+        func = function(accumulator,currentValue) {
+            return accumulator / currentValue;
+        };
         break;
 }
 
-console.log('The result is ' + result);
+console.log('The result is ' + args.reduce(func));
