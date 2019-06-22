@@ -8,8 +8,8 @@ function getOperator ( validOperators ) {
     console.log('Enter the operator');
     var op = readline.prompt();
     while ( !validOperators.includes(op)) {
-        console.log('Operator \'' + op + '\' not recognised');
-        console.log('Valid operators are \'' + validOperators.join('\', \'') +'\'' );
+        console.log(`Operator \'${op}\' not recognised`);
+        console.log(`Valid operators are \'${ validOperators.join('\', \'') } \'` );
         console.log('Enter the operator');
         op = readline.prompt();
     }
@@ -20,7 +20,7 @@ function requestValidNumber ( message ) {
     console.log ( message );
     var num = readline.prompt();
     while ( isNaN ( +num ) ) {
-        console.log(num + ' is not a valid number');
+        console.log(`${num} is not a valid number`);
         console.log(message);
         num = readline.prompt();
     }
@@ -28,11 +28,11 @@ function requestValidNumber ( message ) {
 }
 
 function getArgCount ( op ) {
-    return requestValidNumber('How many numbers do you want to ' + op + '?');
+    return requestValidNumber(`How many numbers do you want to ${op} ?`);
 }
 
 function getOperand ( index ) {
-    return requestValidNumber('Please enter number' + index + ':' );
+    return requestValidNumber(`Please enter number ${index}:` );
 }
 
 function getAllOperands ( count ) {
@@ -80,5 +80,5 @@ while ( true ) {
     const op = getOperator(['+','-','*','/']);
     const num = getArgCount( op );
     const args = getAllOperands(num);
-    console.log('The result is ' + performCalculation(op, args) + '\n' );
+    console.log(`The result is ${performCalculation(op, args)}\n` );
 }
