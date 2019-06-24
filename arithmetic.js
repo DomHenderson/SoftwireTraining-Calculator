@@ -42,6 +42,7 @@ function performCalculation ( op, args ) {
             func = function(accumulator,currentValue) {
                 return accumulator / currentValue;
             };
+            args = args.filter(function(item) { return item != 0 } );
             break;
     }
 
